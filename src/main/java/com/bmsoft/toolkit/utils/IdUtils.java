@@ -1,6 +1,6 @@
 package com.bmsoft.toolkit.utils;
 
-import com.bmsoft.toolkit.SmallSnowflake;
+import com.bmsoft.toolkit.pojo.SmallSnowflake;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;

@@ -1,6 +1,7 @@
 package com.bmsoft.toolkit.aspect;
 
 
+import com.bmsoft.toolkit.annotation.UseBySpringBean;
 import com.bmsoft.toolkit.utils.IdUtils;
 import com.bmsoft.toolkit.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,7 @@ import java.util.Map;
  */
 @Slf4j
 @Aspect
+@UseBySpringBean
 public class LogAspect {
 
     @Pointcut("execution(* com.bmsoft.dc..*Controller.*(..)) && " +

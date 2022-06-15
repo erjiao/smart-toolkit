@@ -2,6 +2,7 @@ package com.bmsoft.toolkit.aspect;
 
 import com.bmsoft.toolkit.Code;
 import com.bmsoft.toolkit.Result;
+import com.bmsoft.toolkit.annotation.UseBySpringBean;
 import com.bmsoft.toolkit.exception.BusinessException;
 import com.bmsoft.toolkit.exception.FeignException;
 import lombok.extern.slf4j.Slf4j;
@@ -26,8 +27,9 @@ import java.util.List;
  * 当指定 {@code @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)} 时,
  * Feign 调用时 springboot 会自动抛出运行时异常, 会使得调用方无法获取 Result
  */
-@RestControllerAdvice
 @Slf4j
+@UseBySpringBean
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
 

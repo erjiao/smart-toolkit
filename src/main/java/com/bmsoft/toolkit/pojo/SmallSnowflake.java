@@ -1,4 +1,4 @@
-package com.bmsoft.toolkit;
+package com.bmsoft.toolkit.pojo;
 
 import cn.hutool.core.date.SystemClock;
 import cn.hutool.core.lang.Assert;
