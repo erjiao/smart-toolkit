@@ -28,15 +28,15 @@ import java.util.stream.Stream;
  * @date 6/15/22 11:39 PM
  */
 @Configuration
-@ConditionalOnProperty(value = "toolkit.log-aspect.controller-expression")
+@ConditionalOnProperty(value = "toolkit.log-aspect.controller-pointcut-expression")
 public class LogAspectConfiguration {
 
 
-    @Value("${toolkit.log-aspect.controller-expression}")
-    private String controllerExpression;  // eg: execution(* com.bmsoft.smart..*Controller.*(..))
+    @Value("${toolkit.log-aspect.controller-pointcut-expression}")
+    private String controllerPointcutExpression;  // eg: execution(* com.bmsoft.smart..*Controller.*(..))
 
 
-    private static final String REQUEST_EXPRESSION = " && " +
+    private static final String REQUEST_POINTCUT_EXPRESSION = " && " +
                     "(@annotation(org.springframework.web.bind.annotation.RequestMapping) ||" +
                     "@annotation(org.springframework.web.bind.annotation.GetMapping) ||" +
                     "@annotation(org.springframework.web.bind.annotation.PostMapping) ||" +
@@ -46,7 +46,7 @@ public class LogAspectConfiguration {
     @Bean
     public Advisor logAdvisor() {
         AspectJExpressionPointcutAdvisor advisor = new AspectJExpressionPointcutAdvisor();
-        advisor.setExpression(controllerExpression + REQUEST_EXPRESSION);
+        advisor.setExpression(controllerPointcutExpression + REQUEST_POINTCUT_EXPRESSION);
         advisor.setAdvice(new LogAdvice());
         return advisor;
     }

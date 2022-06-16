@@ -2,7 +2,7 @@ package com.bmsoft.toolkit.pagination;
 
 import cn.hutool.core.util.ClassUtil;
 import com.bmsoft.toolkit.annotation.TableHeader;
-import com.bmsoft.toolkit.holder.BaseContextHolder;
+import com.bmsoft.toolkit.holder.ParamPageContextHolder;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -23,7 +23,7 @@ public class PageFactory {
     }
 
     public static <T> PageTable<T> buildPageTable(long total, TableRef<T> tableRef) {
-        return buildPageTable(total, BaseContextHolder.getPageNum(), BaseContextHolder.getPageSize(), tableRef);
+        return buildPageTable(total, ParamPageContextHolder.get().getPageNum(), ParamPageContextHolder.get().getPageSize(), tableRef);
     }
 
     public static <T> PageTable<T> buildPageTable(long total, long pageNum, long pageSize, Table<T> table) {

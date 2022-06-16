@@ -7,6 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 泛型类型保持
+ *
+ * 解决因为list数据为空, 无法获取 T 类型的问题
+ *
+ * @see PageFactory
+ *
  * @author llk
  * @date 2019-12-02 09:45
  */
