@@ -2,6 +2,7 @@ package com.bmsoft.toolkit.interceptor;
 
 import com.bmsoft.toolkit.annotation.UseBySpringBean;
 import com.bmsoft.toolkit.exception.InvalidIpException;
+import com.bmsoft.toolkit.properties.AccessCtrl;
 import com.bmsoft.toolkit.utils.IPUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,16 +38,5 @@ public class IpInterceptor extends HandlerInterceptorAdapter {
         return true;
     }
 
-    /**
-     * IP 访问控制接口
-     */
-    public interface AccessCtrl {
-
-        boolean isEnable();
-
-        Set<String> getWhiteIps();
-
-        Set<String> getBlackIps();
-    }
 
 }
