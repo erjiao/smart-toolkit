@@ -1,0 +1,63 @@
+package com.bmsoft.toolkit.core.config;
+
+import org.springframework.aop.Advisor;
+import org.springframework.aop.aspectj.AspectJExpressionPointcut;
+import org.springframework.aop.support.DefaultPointcutAdvisor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.interceptor.TransactionInterceptor;
+
+import java.util.Properties;
+
+/**
+ * @author llk
+ * @date 2019-10-09 13:44
+ */
+@Configuration
+@ConditionalOnBean(PlatformTransactionManager.class)
+@ConditionalOnProperty(value = "toolkit.transaction-advice.pointcut-expression")
+public class TransactionAdviceConfiguration {
+
+//    private static final String TRANSACTION_POINTCUT_EXPRESSION = "execution(* com.bmsoft.dc..*Service.*(..)) and !execution(* com.bmsoft.dc.service.*Service.*(..))";
+
+    @Value("toolkit.transaction-advice.pointcut-expression")
+    private String transactionPointcutExpression;
+
+    /**
+     * 默认是主事务
+     */
+    @Autowired
+    private PlatformTransactionManager transactionManager;
+
+    @Bean
+    public TransactionInterceptor txAdvice() {
+        Properties properties = new Properties();
+
+        properties.setProperty("get*", "PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly");   // 单个对象
+        properties.setProperty("list*", "PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly");  // 多个对象
+        properties.setProperty("count*", "PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly"); // 统计值
+        properties.setProperty("add*", "PROPAGATION_REQUIRED,ISOLATION_DEFAULT");
+        properties.setProperty("insert*", "PROPAGATION_REQUIRED,ISOLATION_DEFAULT");
+        properties.setProperty("save*", "PROPAGATION_REQUIRED,ISOLATION_DEFAULT");
+        properties.setProperty("batch*", "PROPAGATION_REQUIRED,ISOLATION_DEFAULT");
+        properties.setProperty("update*", "PROPAGATION_REQUIRED,ISOLATION_DEFAULT");
+        properties.setProperty("delete*", "PROPAGATION_REQUIRED,ISOLATION_DEFAULT");
+        properties.setProperty("*", "PROPAGATION_REQUIRED,ISOLATION_DEFAULT");
+
+        return new TransactionInterceptor(transactionManager, properties);
+    }
+
+    @Bean
+    public Advisor txAdviceAdvisor() {
+        AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
+        pointcut.setExpression(transactionPointcutExpression);
+        return new DefaultPointcutAdvisor(pointcut, txAdvice());
+    }
+
+
+}

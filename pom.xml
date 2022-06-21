@@ -6,7 +6,15 @@
 
     <groupId>com.bmsoft</groupId>
     <artifactId>smart-toolkit</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>smart-toolkit-core</module>
+        <module>smart-toolkit-web</module>
+        <module>smart-toolkit-log</module>
+        <module>smart-toolkit-job</module>
+        <module>smart-toolkit-bom</module>
+    </modules>
 
     <name>smart-toolkit</name>
     <description>工具箱</description>
@@ -19,6 +27,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <lombok.version>1.18.8</lombok.version>
+        <springboot.version>2.1.6.RELEASE</springboot.version>
         <jackson-databind-version>2.9.9</jackson-databind-version>
         <spring.version>5.1.8.RELEASE</spring.version>
         <aspectj.version>1.9.4</aspectj.version>
@@ -124,7 +133,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
-            <version>2.1.6.RELEASE</version>
+            <version>${springboot.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>slf4j-api</artifactId>
@@ -137,5 +146,47 @@
         <!--  optional(依赖不传递) end -->
 
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.bmsoft</groupId>
+                <artifactId>smart-toolkit-bom</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>1.2.7</version>
+                <configuration>
+                    <updatePomFile>true</updatePomFile>
+                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
