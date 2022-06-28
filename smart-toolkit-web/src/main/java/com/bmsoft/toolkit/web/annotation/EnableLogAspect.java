@@ -1,6 +1,6 @@
-package com.bmsoft.toolkit.log.annotation;
+package com.bmsoft.toolkit.web.annotation;
 
-import com.bmsoft.toolkit.log.config.LogAspectConfiguration;
+import com.bmsoft.toolkit.web.config.LogAspectConfiguration;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.Documented;
@@ -13,7 +13,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 /**
  * 启用日志切面
  *
- * 需要配置 {@code toolkit.log-handle.controller-pointcut-expression}
+ * 需要配置 {@code toolkit.log-handler.controller-pointcut-expression} 才会生效
  *
  * @see LogAspectConfiguration
  *

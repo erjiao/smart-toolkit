@@ -5,7 +5,6 @@ import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,13 +18,12 @@ import java.util.Properties;
  * @date 2019-10-09 13:44
  */
 @Configuration
-@ConditionalOnBean(PlatformTransactionManager.class)
 @ConditionalOnProperty(value = "toolkit.transaction-advice.pointcut-expression")
 public class TransactionAdviceConfiguration {
 
 //    private static final String TRANSACTION_POINTCUT_EXPRESSION = "execution(* com.bmsoft.dc..*Service.*(..)) and !execution(* com.bmsoft.dc.service.*Service.*(..))";
 
-    @Value("toolkit.transaction-advice.pointcut-expression")
+    @Value("${toolkit.transaction-advice.pointcut-expression}")
     private String transactionPointcutExpression;
 
     /**

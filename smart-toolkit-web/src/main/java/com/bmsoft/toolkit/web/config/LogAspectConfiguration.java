@@ -1,4 +1,4 @@
-package com.bmsoft.toolkit.log.config;
+package com.bmsoft.toolkit.web.config;
 
 import com.bmsoft.toolkit.core.utils.IdUtils;
 import com.bmsoft.toolkit.core.utils.JsonUtils;
@@ -28,15 +28,15 @@ import java.util.stream.Stream;
  * @date 6/15/22 11:39 PM
  */
 @Configuration
-@ConditionalOnProperty(value = "toolkit.log-handle.controller-pointcut-expression")
+@ConditionalOnProperty(value = "toolkit.log-handler.controller-pointcut-expression")
 public class LogAspectConfiguration {
 
 
-    @Value("${toolkit.log-handle.controller-pointcut-expression}")
+    @Value("${toolkit.log-handler.controller-pointcut-expression}")
     private String controllerPointcutExpression;  // eg: execution(* com.bmsoft.smart..*Controller.*(..))
 
 
-    private static final String REQUEST_POINTCUT_EXPRESSION = " && " +
+    private static final String REQUEST_POINTCUT_EXPRESSION =
                     "(@annotation(org.springframework.web.bind.annotation.RequestMapping) ||" +
                     "@annotation(org.springframework.web.bind.annotation.GetMapping) ||" +
                     "@annotation(org.springframework.web.bind.annotation.PostMapping) ||" +
@@ -46,7 +46,7 @@ public class LogAspectConfiguration {
     @Bean
     public Advisor logAdvisor() {
         AspectJExpressionPointcutAdvisor advisor = new AspectJExpressionPointcutAdvisor();
-        advisor.setExpression(controllerPointcutExpression + REQUEST_POINTCUT_EXPRESSION);
+        advisor.setExpression(controllerPointcutExpression + " && " + REQUEST_POINTCUT_EXPRESSION);
         advisor.setAdvice(new LogAdvice());
         return advisor;
     }

@@ -7,11 +7,10 @@
     <groupId>com.bmsoft</groupId>
     <artifactId>smart-toolkit</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0.RELEASE</version>
     <modules>
         <module>smart-toolkit-core</module>
         <module>smart-toolkit-web</module>
-        <module>smart-toolkit-log</module>
         <module>smart-toolkit-job</module>
         <module>smart-toolkit-bom</module>
         <module>smart-toolkit-swagger</module>
@@ -53,7 +52,7 @@
             <dependency>
                 <groupId>com.bmsoft</groupId>
                 <artifactId>smart-toolkit-bom</artifactId>
-                <version>${project.version}</version>
+                <version>1.0.0.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -151,6 +150,31 @@
     </dependencyManagement>
 
     <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <uniqueVersion>true</uniqueVersion>
+            <id>releases</id>
+            <name>releases</name>
+            <url>http://10.194.188.225:18081/repository/maven-releases/</url>
+            <layout>default</layout>
+        </repository>
+    </distributionManagement>
 
 </project>

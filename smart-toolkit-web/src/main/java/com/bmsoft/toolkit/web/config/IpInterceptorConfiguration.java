@@ -8,8 +8,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.handler.MappedInterceptor;
 
 /**
+ *
  * @author llk
  * @date 2022-06-17 14:47
  */
@@ -20,6 +22,15 @@ public class IpInterceptorConfiguration implements WebMvcConfigurer {
     @Autowired
     IpInterceptorProperties ipInterceptorProperties;
 
+
+    /**
+     * {@code includePatterns} empty for matching to all paths
+     * {@code excludePatterns} the path patterns to exclude (empty for no specific excludes)
+     *
+     * @see MappedInterceptor
+     *
+     * @param registry
+     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(ipInterceptor())
