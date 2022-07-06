@@ -16,7 +16,7 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@ConfigurationProperties(prefix = "toolkit.interceptors.param-page-context-interceptor")
+@ConfigurationProperties(prefix = "smart-toolkit.interceptors.param-page-context-interceptor")
 public class ParamPageContextInterceptorProperties extends InterceptorProperties implements InitializingBean {
 
     private static final List<String> DEFAULT_PATH_PATTERNS =
@@ -32,11 +32,11 @@ public class ParamPageContextInterceptorProperties extends InterceptorProperties
 
     private Integer order = 0;
 
-    private boolean addDefaultPatterns = true;
+    private Boolean useDefault = true;
 
     @Override
     public void afterPropertiesSet() {
-        if (addDefaultPatterns) {
+        if (useDefault) {
             pathPatterns.addAll(0, DEFAULT_PATH_PATTERNS);
             excludePathPatterns.addAll(0, DEFAULT_EXCLUDE_PATH_PATTERNS);
         }

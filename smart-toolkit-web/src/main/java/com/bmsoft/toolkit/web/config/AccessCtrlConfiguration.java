@@ -16,7 +16,7 @@ public class AccessCtrlConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(AccessCtrl.class)
-    @ConfigurationProperties(prefix = "toolkit.interceptors.ip-interceptor.access-control")
+    @ConfigurationProperties(prefix = "smart-toolkit.interceptors.ip-interceptor.access-control")
     public AccessCtrl accessCtrl() {
         return new AccessCtrlProperties();
     }

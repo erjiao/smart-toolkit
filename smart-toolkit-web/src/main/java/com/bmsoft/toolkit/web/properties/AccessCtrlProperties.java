@@ -12,7 +12,7 @@ import java.util.Set;
 @Data
 public class AccessCtrlProperties implements AccessCtrl {
 
-    private boolean enable;
+    private boolean enabled;
 
     private Set<String> whiteIps = new HashSet<>();
 

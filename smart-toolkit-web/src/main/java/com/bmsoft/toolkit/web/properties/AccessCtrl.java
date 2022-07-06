@@ -8,7 +8,7 @@ import java.util.Set;
  */
 public interface AccessCtrl {
 
-    boolean isEnable();
+    boolean isEnabled();
 
     Set<String> getWhiteIps();
 

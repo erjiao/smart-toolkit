@@ -28,7 +28,7 @@ public class IpInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String realIP = IPUtils.getRealIP(request);
         log.info("ip: {}", realIP);
-        if (accessCtrl.isEnable()) {
+        if (accessCtrl.isEnabled()) {
             Set<String> whiteIps = accessCtrl.getWhiteIps();
             Set<String> blackIps = accessCtrl.getBlackIps();
             if (!whiteIps.contains(realIP) || blackIps.contains(realIP)) {

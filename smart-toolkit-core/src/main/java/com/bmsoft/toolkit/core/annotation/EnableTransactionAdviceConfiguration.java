@@ -13,7 +13,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 /**
  * 启用事务环绕通知
  *
- * 需要配置 {@code toolkit.transaction-advice.pointcut-expression}
+ * 需要配置 {@code smart-toolkit.transaction-advice.pointcut-expression}
  *
  * @see TransactionAdviceConfiguration
  *

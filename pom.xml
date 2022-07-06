@@ -7,7 +7,7 @@
     <groupId>com.bmsoft</groupId>
     <artifactId>smart-toolkit</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0.RELEASE</version>
+    <version>1.1.0.RELEASE</version>
     <modules>
         <module>smart-toolkit-core</module>
         <module>smart-toolkit-web</module>
@@ -27,16 +27,17 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <lombok.version>1.18.8</lombok.version>
-        <springboot.version>2.1.6.RELEASE</springboot.version>
-        <jackson-databind-version>2.9.9</jackson-databind-version>
-        <spring.version>5.1.8.RELEASE</spring.version>
-        <aspectj.version>1.9.4</aspectj.version>
+        <springboot.version>2.2.12.RELEASE</springboot.version>
+        <jackson-databind-version>2.10.5.1</jackson-databind-version>
+        <spring.version>5.2.12.RELEASE</spring.version>
+        <aspectj.version>1.9.6</aspectj.version>
         <servlet.version>4.0.1</servlet.version>
         <hutool.version>5.7.21</hutool.version>
-        <slf4j.version>1.7.26</slf4j.version>
-        <jackson-datatype-jsr310.version>2.9.9</jackson-datatype-jsr310.version>
+        <slf4j.version>1.7.30</slf4j.version>
+        <jackson-datatype-jsr310.version>2.10.5</jackson-datatype-jsr310.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
         <cglib.version>3.3.0</cglib.version>
+        <knife4j.version>3.0.3</knife4j.version>
     </properties>
 
     <dependencies>
@@ -52,7 +53,7 @@
             <dependency>
                 <groupId>com.bmsoft</groupId>
                 <artifactId>smart-toolkit-bom</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>1.1.0.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -144,7 +145,19 @@
                 </exclusions>
             </dependency>
 
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-autoconfigure</artifactId>
+                <version>${springboot.version}</version>
+            </dependency>
+
             <!--  optional(依赖不传递) end -->
+
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>

@@ -18,12 +18,12 @@ import java.util.Properties;
  * @date 2019-10-09 13:44
  */
 @Configuration
-@ConditionalOnProperty(value = "toolkit.transaction-advice.pointcut-expression")
+@ConditionalOnProperty(value = "smart-toolkit.transaction-advice.pointcut-expression")
 public class TransactionAdviceConfiguration {
 
 //    private static final String TRANSACTION_POINTCUT_EXPRESSION = "execution(* com.bmsoft.dc..*Service.*(..)) and !execution(* com.bmsoft.dc.service.*Service.*(..))";
 
-    @Value("${toolkit.transaction-advice.pointcut-expression}")
+    @Value("${smart-toolkit.transaction-advice.pointcut-expression}")
     private String transactionPointcutExpression;
 
     /**
