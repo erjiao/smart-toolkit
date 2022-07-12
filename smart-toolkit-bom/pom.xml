@@ -38,6 +38,12 @@
                 <version>1.0.0.RELEASE</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.bmsoft</groupId>
+                <artifactId>smart-toolkit-mybatis</artifactId>
+                <version>1.0.0.RELEASE</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

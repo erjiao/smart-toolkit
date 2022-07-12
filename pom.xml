@@ -39,6 +39,9 @@
         <validation-api.version>2.0.1.Final</validation-api.version>
         <cglib.version>3.3.0</cglib.version>
         <knife4j.version>3.0.3</knife4j.version>
+        <mybatis-spring.starter.version>2.2.1</mybatis-spring.starter.version>
+        <mybatis-plus.starter.version>3.5.1</mybatis-plus.starter.version>
+        <swagger-annonations.version>1.5.22</swagger-annonations.version>
     </properties>
 
     <dependencies>
@@ -158,6 +161,24 @@
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis-spring.starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger-annonations.version}</version>
             </dependency>
 
         </dependencies>
