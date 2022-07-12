@@ -40,9 +40,9 @@ import java.time.format.DateTimeFormatter;
  * @author lishanbu
  */
 
-public class SmartJavaTimeModule extends SimpleModule {
+public class SmartToolkitJavaTimeModule extends SimpleModule {
 
-	public SmartJavaTimeModule() {
+	public SmartToolkitJavaTimeModule() {
 		super(PackageVersion.VERSION);
 
 		// ======================= 时间序列化规则 ===============================

@@ -14,6 +14,7 @@
         <module>smart-toolkit-job</module>
         <module>smart-toolkit-bom</module>
         <module>smart-toolkit-swagger</module>
+        <module>smart-toolkit-mybatis</module>
     </modules>
 
     <name>smart-toolkit</name>

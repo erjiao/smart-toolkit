@@ -1,7 +1,7 @@
 package com.bmsoft.toolkit.core.utils;
 
 import cn.hutool.core.date.DatePattern;
-import com.bmsoft.toolkit.core.jackson.SmartJavaTimeModule;
+import com.bmsoft.toolkit.core.jackson.SmartToolkitJavaTimeModule;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,7 +24,7 @@ final class ObjContainer {
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        objectMapper.registerModule(new SmartJavaTimeModule());
+        objectMapper.registerModule(new SmartToolkitJavaTimeModule());
 
     }
 }

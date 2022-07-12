@@ -28,11 +28,11 @@ import java.util.stream.Stream;
  * @date 6/15/22 11:39 PM
  */
 @Configuration
-@ConditionalOnProperty(value = "toolkit.log-handler.controller-pointcut-expression")
+@ConditionalOnProperty(value = "smart-toolkit.log-handler.controller-pointcut-expression")
 public class LogAspectConfiguration {
 
 
-    @Value("${toolkit.log-handler.controller-pointcut-expression}")
+    @Value("${smart-toolkit.log-handler.controller-pointcut-expression}")
     private String controllerPointcutExpression;  // eg: execution(* com.bmsoft.smart..*Controller.*(..))
 
 
