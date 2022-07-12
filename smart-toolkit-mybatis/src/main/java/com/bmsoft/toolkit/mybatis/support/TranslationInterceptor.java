@@ -6,7 +6,6 @@ import com.bmsoft.toolkit.mybatis.annotation.Translate;
 import com.bmsoft.toolkit.mybatis.annotation.Translation;
 import com.bmsoft.toolkit.mybatis.entity.Dict;
 import com.bmsoft.toolkit.mybatis.entity.DictContainer;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.executor.resultset.ResultSetHandler;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.plugin.Intercepts;
@@ -29,7 +28,6 @@ import java.util.Properties;
 @Intercepts(
         @Signature(type = ResultSetHandler.class, method = "handleResultSets", args = Statement.class)
 )
-@Slf4j
 public class TranslationInterceptor implements Interceptor {
 
     private DictContainer dictContainer;
