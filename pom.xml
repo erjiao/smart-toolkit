@@ -15,6 +15,7 @@
         <module>smart-toolkit-bom</module>
         <module>smart-toolkit-swagger</module>
         <module>smart-toolkit-mybatis</module>
+        <module>smart-toolkit-all</module>
     </modules>
 
     <name>smart-toolkit</name>

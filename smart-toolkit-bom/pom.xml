@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <name>smart-toolkit-bom</name>
-    <description>保存所有依赖</description>
+    <description>bom</description>
 
     <dependencyManagement>
         <dependencies>
