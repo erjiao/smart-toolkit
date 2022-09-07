@@ -7,7 +7,7 @@
     <groupId>com.bmsoft</groupId>
     <artifactId>smart-toolkit</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0.RELEASE</version>
+    <version>1.1.0.RELEASE</version>
     <modules>
         <module>smart-toolkit-core</module>
         <module>smart-toolkit-web</module>
@@ -58,7 +58,7 @@
             <dependency>
                 <groupId>com.bmsoft</groupId>
                 <artifactId>smart-toolkit-bom</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>1.1.0.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
