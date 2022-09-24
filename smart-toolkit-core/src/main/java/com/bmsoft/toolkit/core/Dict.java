@@ -1,4 +1,4 @@
-package com.bmsoft.toolkit.mybatis.entity;
+package com.bmsoft.toolkit.core;
 
 import lombok.Data;
 

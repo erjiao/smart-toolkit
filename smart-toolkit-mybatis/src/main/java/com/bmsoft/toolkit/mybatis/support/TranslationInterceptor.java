@@ -2,10 +2,10 @@ package com.bmsoft.toolkit.mybatis.support;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ClassUtil;
+import com.bmsoft.toolkit.core.Dict;
+import com.bmsoft.toolkit.core.holder.DictHolder;
 import com.bmsoft.toolkit.mybatis.annotation.Translate;
 import com.bmsoft.toolkit.mybatis.annotation.Translation;
-import com.bmsoft.toolkit.mybatis.entity.Dict;
-import com.bmsoft.toolkit.mybatis.entity.DictContainer;
 import org.apache.ibatis.executor.resultset.ResultSetHandler;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.plugin.Intercepts;
@@ -30,12 +30,6 @@ import java.util.Properties;
 )
 public class TranslationInterceptor implements Interceptor {
 
-    private DictContainer dictContainer;
-
-    public TranslationInterceptor(DictContainer dictContainer) {
-        this.dictContainer = dictContainer;
-    }
-
     public TranslationInterceptor() {
     }
 
@@ -47,7 +41,7 @@ public class TranslationInterceptor implements Interceptor {
     }
 
     private Object translate(List<Object> objects) throws NoSuchFieldException, IllegalAccessException {
-        Integer size = dictContainer.size();
+        Integer size = DictHolder.getInstance().size();
         // Objects.nonNull(objects.get(0)), 解决统计函数返回null 的问题
         if (size > 0 && CollUtil.isNotEmpty(objects) && Objects.nonNull(objects.get(0))) {
             Class<?> aClass = objects.get(0).getClass();
@@ -64,7 +58,7 @@ public class TranslationInterceptor implements Interceptor {
                             byField.setAccessible(true);
                             Object o = byField.get(object);
 
-                            Dict dict = dictContainer.get(type, String.valueOf(o));
+                            Dict dict = DictHolder.getInstance().get(type, String.valueOf(o));
 
                             field.setAccessible(true);
                             field.set(object, dict.getValue());

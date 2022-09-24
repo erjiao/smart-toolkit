@@ -4,10 +4,8 @@ import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import com.bmsoft.toolkit.mybatis.entity.DictContainer;
-import com.bmsoft.toolkit.mybatis.entity.EmptyDictContainer;
 import com.bmsoft.toolkit.mybatis.support.BaseEntityMetaObjectHandler;
-import com.bmsoft.toolkit.mybatis.support.TranslationInterceptor;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 2022-07-06 19:16
  */
 @Configuration
+@AutoConfigureAfter(SysStDictConfiguration.class)
 public class MybatisPlusConfiguration {
 
     /**
@@ -39,18 +38,6 @@ public class MybatisPlusConfiguration {
     @ConditionalOnMissingBean(BaseEntityMetaObjectHandler.class)
     public BaseEntityMetaObjectHandler mybatisPlusMetaObjectHandler() {
         return new BaseEntityMetaObjectHandler();
-    }
-
-
-    @Bean
-    @ConditionalOnMissingBean(DictContainer.class)
-    public DictContainer dictContainer() {
-        return new EmptyDictContainer();
-    }
-
-    @Bean
-    public TranslationInterceptor translationInterceptor(DictContainer dictContainer) {
-        return new TranslationInterceptor(dictContainer);
     }
 
 }
