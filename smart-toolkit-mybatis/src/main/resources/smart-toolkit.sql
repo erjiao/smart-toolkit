@@ -12,7 +12,7 @@ create table `sys_st_dict` (
   `update_time` datetime default current_timestamp on update current_timestamp comment '更新时间',
   `remark` varchar(500) default null comment '备注',
   primary key (`id`),
-  unique key `idx_dict_code_type_uindex` (`dict_code`,`dict_type`)
+  unique key `idx_dict_code_type_unique` (`dict_code`,`dict_type`)
 ) engine=innodb auto_increment=1 default charset=utf8mb4 comment='字典数据表';
 
 insert into `sys_st_dict` (`id`, `dict_code`, `dict_sort`, `dict_value`, `dict_type`, `status`, `create_time`, `update_time`, `remark`) values (1, '1', 0, '男', 'gender', '0', '2022-09-24 17:35:38', '2022-09-24 17:36:30', null);
@@ -30,7 +30,7 @@ create table `sys_st_dict_type` (
   `update_time` datetime default current_timestamp on update current_timestamp comment '更新时间',
   `remark` varchar(500) default null comment '备注',
   primary key (`id`),
-  unique key `idx_dict_type_uindex` (`dict_type`)
+  unique key `idx_dict_type_unique` (`dict_type`)
 ) engine=innodb auto_increment=1 default charset=utf8mb4 comment='字典类型表';
 
 
