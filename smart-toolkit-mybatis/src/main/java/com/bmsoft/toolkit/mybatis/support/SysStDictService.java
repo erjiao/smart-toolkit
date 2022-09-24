@@ -1,5 +1,6 @@
 package com.bmsoft.toolkit.mybatis.support;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -42,6 +43,10 @@ public class SysStDictService extends ServiceImpl<SysStDictMapper, SysStDict> {
      * @return
      */
     public List<SysStDict> getNormalDictListByType(String dictType) {
+        if (StrUtil.isBlank(dictType)) {
+            return this.getNormalDictList();
+        }
+
         LambdaQueryWrapper<SysStDict> queryWrapper = Wrappers.<SysStDict>lambdaQuery().eq(SysStDict::getDictType, dictType);
         return sysStDictMapper.selectList(queryWrapper);
     }
