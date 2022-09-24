@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author llk
@@ -17,7 +18,7 @@ import java.io.Serializable;
 @Data
 @TableName("sys_st_dict_type")
 @ApiModel(value="SysStDictType对象", description="字典类型表")
-public class SysStDictType extends BaseEntity implements Serializable {
+public class SysStDictType implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -36,6 +37,14 @@ public class SysStDictType extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "状态（0正常 1停用）")
     @TableField("`status`")
     private String status;
+
+    @TableField(value = "create_time")
+    @ApiModelProperty("创建时间")
+    private Date createTime;
+
+    @TableField(value = "update_time")
+    @ApiModelProperty("更新时间")
+    private Date updateTime;
 
     @ApiModelProperty(value = "备注")
     @TableField("`remark`")

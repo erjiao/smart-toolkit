@@ -7,19 +7,18 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author llk
  * @date 2022-09-24 00:37
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("sys_st_dict")
 @ApiModel(value="SysStDict对象", description="字典数据表")
-public class SysStDict extends BaseEntity implements Serializable {
+public class SysStDict implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -46,6 +45,14 @@ public class SysStDict extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "状态（0正常 1停用）")
     @TableField("`status`")
     private String status;
+
+    @TableField(value = "create_time")
+    @ApiModelProperty("创建时间")
+    private Date createTime;
+
+    @TableField(value = "update_time")
+    @ApiModelProperty("更新时间")
+    private Date updateTime;
 
     @ApiModelProperty(value = "备注")
     @TableField("`remark`")
