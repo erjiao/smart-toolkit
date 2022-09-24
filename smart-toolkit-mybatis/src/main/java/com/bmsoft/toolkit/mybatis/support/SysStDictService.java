@@ -35,6 +35,17 @@ public class SysStDictService extends ServiceImpl<SysStDictMapper, SysStDict> {
         return sysStDictMapper.selectNormalDictList();
     }
 
+
+    /**
+     * 根据字典类型获取字典列表
+     * @param dictType
+     * @return
+     */
+    public List<SysStDict> getNormalDictListByType(String dictType) {
+        LambdaQueryWrapper<SysStDict> queryWrapper = Wrappers.<SysStDict>lambdaQuery().eq(SysStDict::getDictType, dictType);
+        return sysStDictMapper.selectList(queryWrapper);
+    }
+
     /**
      * 关联sys_st_dict_type 获取所有字典项(含status=1)
      *
