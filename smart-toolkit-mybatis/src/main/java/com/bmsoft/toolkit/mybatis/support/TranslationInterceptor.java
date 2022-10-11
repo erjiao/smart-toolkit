@@ -54,14 +54,19 @@ public class TranslationInterceptor implements Interceptor {
                         if (translate != null) {
                             String byFieldStr = translate.byField();
                             String type = translate.type();
-                            Field byField = aClass.getDeclaredField(byFieldStr);
-                            byField.setAccessible(true);
-                            Object o = byField.get(object);
 
+                            // 获取 byField 的值
+                            Object o = ReflectUtil.getFieldValue(object, byFieldStr);
+
+                            // 设置字典值
                             Dict dict = DictHolder.getInstance().get(type, String.valueOf(o));
+                            ReflectUtil.setFieldValue(object, field, dict.getValue());
 
-                            field.setAccessible(true);
-                            field.set(object, dict.getValue());
+//                            Field byField = aClass.getDeclaredField(byFieldStr);
+//                            byField.setAccessible(true);
+//                            Object o = byField.get(object);
+//                            field.setAccessible(true);
+//                            field.set(object, dict.getValue());
                         }
                     }
                 }
