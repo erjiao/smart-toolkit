@@ -1,7 +1,7 @@
 package com.bmsoft.toolkit.mybatis.support;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.ClassUtil;
+import cn.hutool.core.util.ReflectUtil;
 import com.bmsoft.toolkit.core.Dict;
 import com.bmsoft.toolkit.core.holder.DictHolder;
 import com.bmsoft.toolkit.mybatis.annotation.Translate;
@@ -48,7 +48,7 @@ public class TranslationInterceptor implements Interceptor {
             Translation translation = aClass.getAnnotation(Translation.class);
             if (Objects.nonNull(translation)) {
                 for (Object object : objects) {
-                    Field[] fields = ClassUtil.getDeclaredFields(aClass);
+                    Field[] fields = ReflectUtil.getFields(aClass);
                     for (Field field : fields) {
                         Translate translate = field.getAnnotation(Translate.class);
                         if (translate != null) {
