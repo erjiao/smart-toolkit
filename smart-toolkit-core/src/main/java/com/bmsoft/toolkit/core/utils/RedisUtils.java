@@ -36,6 +36,7 @@ public class RedisUtils {
         setOperations = redisTemplate.opsForSet();
         zSetOperations = redisTemplate.opsForZSet();
     }
+
     // ------------------- key operations begin ---------------------
     public void delete(String key) {
         redisTemplate.delete(key);
@@ -78,6 +79,10 @@ public class RedisUtils {
         return valueOperations.setIfAbsent(key, value);
     }
 
+    public Boolean setIfAbsent(String key, String value, long timeout, TimeUnit timeUnit) {
+        return valueOperations.setIfAbsent(key, value, timeout, timeUnit);
+    }
+
     public String get(String key) {
         return valueOperations.get(key);
     }
@@ -88,20 +93,24 @@ public class RedisUtils {
     // ------------------ string operations end ------------------------
 
     // ------------------ list operations begin ------------------------
-    public void leftPush(String key, String value){
+    public void leftPush(String key, String value) {
         listOperations.leftPush(key, value);
     }
 
-    public void rightPush(String key, String value){
+    public void rightPush(String key, String value) {
         listOperations.rightPush(key, value);
     }
 
-    public void leftPushAll(String key, List<String> list ) {
+    public void leftPushAll(String key, List<String> list) {
         listOperations.leftPushAll(key, list);
     }
 
-    public void rightPushAll(String key, List<String> list ) {
+    public void rightPushAll(String key, List<String> list) {
         listOperations.rightPushAll(key, list);
+    }
+
+    public String rightPop(String key) {
+        return listOperations.rightPop(key);
     }
 
     public List<String> lGetAll(String key) {
@@ -112,6 +121,11 @@ public class RedisUtils {
         return listOperations.range(key, start, end);
     }
 
+    public long lsize(String key) {
+        Long size = listOperations.size(key);
+        return size == null ? 0 : size;
+    }
+
     // ------------------ list operations end ------------------------
 
     // ------------------- set operations begin ---------------------
@@ -119,11 +133,11 @@ public class RedisUtils {
         this.add(key, collection.toArray(new String[0]));
     }
 
-    public void add(String key, String ... values) {
+    public void add(String key, String... values) {
         setOperations.add(key, values);
     }
 
-    public void sRemove(String key, String ... values) {
+    public void sRemove(String key, String... values) {
         setOperations.remove(key, values);
     }
 
@@ -143,9 +157,11 @@ public class RedisUtils {
     public String hGet(String key, String field) {
         return hashOperations.get(key, field);
     }
+
     public Map<String, String> hGetAll(String key) {
         return hashOperations.entries(key);
     }
+
     public List<String> hMultiGet(String key, Collection<String> fields) {
         return hashOperations.multiGet(key, fields);
     }
@@ -185,7 +201,7 @@ public class RedisUtils {
 
     // ------------------- publish operations start -------------------
     public void publish(String channel, String msg) {
-        redisTemplate.convertAndSend(channel,msg);
+        redisTemplate.convertAndSend(channel, msg);
     }
 
     // ------------------- publish operations end ---------------------

@@ -23,19 +23,19 @@ public class SysStDictType implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "主键")
-    @TableId(value = "`id`", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     @ApiModelProperty(value = "字典名称")
-    @TableField("`dict_name`")
+    @TableField("dict_name")
     private String dictName;
 
     @ApiModelProperty(value = "字典类型")
-    @TableField("`dict_type`")
+    @TableField("dict_type")
     private String dictType;
 
     @ApiModelProperty(value = "状态（0正常 1停用）")
-    @TableField("`status`")
+    @TableField("status")
     private String status;
 
     @TableField(value = "create_time")
@@ -47,7 +47,7 @@ public class SysStDictType implements Serializable {
     private Date updateTime;
 
     @ApiModelProperty(value = "备注")
-    @TableField("`remark`")
+    @TableField("remark")
     private String remark;
 
 

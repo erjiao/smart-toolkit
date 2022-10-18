@@ -47,7 +47,9 @@ public class SysStDictService extends ServiceImpl<SysStDictMapper, SysStDict> {
             return this.getNormalDictList();
         }
 
-        LambdaQueryWrapper<SysStDict> queryWrapper = Wrappers.<SysStDict>lambdaQuery().eq(SysStDict::getDictType, dictType);
+        LambdaQueryWrapper<SysStDict> queryWrapper = Wrappers.<SysStDict>lambdaQuery()
+                .eq(SysStDict::getDictType, dictType)
+                .eq(SysStDict::getStatus, "0");
         return sysStDictMapper.selectList(queryWrapper);
     }
 
