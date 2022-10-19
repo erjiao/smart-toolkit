@@ -9,13 +9,19 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>smart-toolkit-job</artifactId>
-    <name>smart-toolkit-job</name>
+    <artifactId>smart-toolkit-minio</artifactId>
+
 
     <dependencies>
+
         <dependency>
             <groupId>com.bmsoft</groupId>
             <artifactId>smart-toolkit-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
         </dependency>
     </dependencies>
 
