@@ -19,6 +19,8 @@ public class UploadResponse {
 
     private String fullName;
 
+    private Integer size;
+
     private String contentType;
 
     private String url;

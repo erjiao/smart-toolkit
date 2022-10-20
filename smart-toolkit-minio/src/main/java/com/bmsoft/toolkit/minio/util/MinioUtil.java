@@ -67,11 +67,11 @@ public class MinioUtil {
         // 保存原文件名
         HashMap<String, String> userMetadata =
                 MapUtil.of(ORIGINAL_FILENAME_HEADER, filename);
-
+        int size = stream.available();
         String url =
-                this.putObject(bucketName, objectName, stream, stream.available(), contentType, userMetadata);
+                this.putObject(bucketName, objectName, stream, size, contentType, userMetadata);
         log.info("the file [{}] contentType [{}] upload success, url is [{}]", filename, contentType, url);
-        return new UploadResponse(newFilename, filename, objectName, contentType, url);
+        return new UploadResponse(newFilename, filename, objectName, size, contentType, url);
     }
 
     private String getMimeType(String filename) {

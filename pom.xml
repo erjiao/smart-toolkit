@@ -7,7 +7,7 @@
     <groupId>com.bmsoft</groupId>
     <artifactId>smart-toolkit</artifactId>
     <packaging>pom</packaging>
-    <version>1.2.0.RELEASE</version>
+    <version>1.3.0.RELEASE</version>
     <modules>
         <module>smart-toolkit-core</module>
         <module>smart-toolkit-web</module>
@@ -16,6 +16,7 @@
         <module>smart-toolkit-swagger</module>
         <module>smart-toolkit-mybatis</module>
         <module>smart-toolkit-minio</module>
+        <module>smart-toolkit-xxljob</module>
         <module>smart-toolkit-all</module>
     </modules>
 
@@ -45,6 +46,7 @@
         <mybatis-plus.starter.version>3.5.1</mybatis-plus.starter.version>
         <swagger-annonations.version>1.5.22</swagger-annonations.version>
         <minio.version>8.2.1</minio.version>
+        <xxl-job.version>2.3.0</xxl-job.version>
     </properties>
 
     <dependencies>
@@ -60,7 +62,7 @@
             <dependency>
                 <groupId>com.bmsoft</groupId>
                 <artifactId>smart-toolkit-bom</artifactId>
-                <version>1.2.0.RELEASE</version>
+                <version>1.3.0.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -188,6 +190,12 @@
                 <groupId>io.minio</groupId>
                 <artifactId>minio</artifactId>
                 <version>${minio.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.xuxueli</groupId>
+                <artifactId>xxl-job-core</artifactId>
+                <version>${xxl-job.version}</version>
             </dependency>
 
         </dependencies>

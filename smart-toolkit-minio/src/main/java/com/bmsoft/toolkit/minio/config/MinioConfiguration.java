@@ -1,6 +1,7 @@
 package com.bmsoft.toolkit.minio.config;
 
 
+import com.bmsoft.toolkit.minio.controller.STFileController;
 import com.bmsoft.toolkit.minio.util.MinioUtil;
 import io.minio.MinioClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -31,6 +32,11 @@ public class MinioConfiguration {
     @Bean
     public MinioUtil minioUtil(MinioClient minioClient, MinioProperties minioProperties) {
         return new MinioUtil(minioClient, minioProperties);
+    }
+
+    @Bean
+    public STFileController stFileController() {
+        return new STFileController();
     }
 
 }
