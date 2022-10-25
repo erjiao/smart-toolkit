@@ -57,7 +57,7 @@ import java.util.stream.Collectors;
  * @author llk
  */
 @EnableSwagger2
-@ConditionalOnProperty(name = "smart-toolkit.swagger.enabled", matchIfMissing = true)
+@ConditionalOnProperty(name = "smart-toolkit.swagger.enabled", havingValue = "true", matchIfMissing = true)
 public class SwaggerConfiguration {
 
 

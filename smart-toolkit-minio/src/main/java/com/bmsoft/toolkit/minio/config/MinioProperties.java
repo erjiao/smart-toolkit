@@ -42,6 +42,9 @@ public class MinioProperties {
     private String bucketName;
 
 
+    private Boolean enabled = true;
+
+
     public String getUrl(String bucketName, String objectName) {
         return endpoint + "/" + bucketName + "/" + objectName;
     }

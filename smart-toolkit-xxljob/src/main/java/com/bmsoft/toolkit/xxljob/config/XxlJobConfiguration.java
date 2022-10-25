@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Slf4j
 @Configuration
-@ConditionalOnProperty("smart-toolkit.xxl.job.admin.addresses")
+@ConditionalOnProperty(value = "smart-toolkit.xxl.job.enabled", havingValue = "true", matchIfMissing = true)
 @ComponentScan(basePackages = "com.bmsoft.toolkit.xxljob")
 @EnableConfigurationProperties(XxlJobProperties.class)
 public class XxlJobConfiguration {
@@ -33,7 +33,6 @@ public class XxlJobConfiguration {
         xxlJobSpringExecutor.setAccessToken(xxlJobProperties.getAccessToken());
         xxlJobSpringExecutor.setLogPath(executor.getLogPath());
         xxlJobSpringExecutor.setLogRetentionDays(executor.getLogRetentionDays());
-
         return xxlJobSpringExecutor;
     }
 

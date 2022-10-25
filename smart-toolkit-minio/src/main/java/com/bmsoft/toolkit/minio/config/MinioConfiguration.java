@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 2022-10-18 19:30
  */
 @Configuration
-@ConditionalOnProperty(value = "smart-toolkit.minio.endpoint")
+@ConditionalOnProperty(value = "smart-toolkit.minio.enabled", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties(MinioProperties.class)
 public class MinioConfiguration {
 
@@ -35,6 +35,7 @@ public class MinioConfiguration {
     }
 
     @Bean
+    @ConditionalOnProperty(value = "smart-toolkit.minio.file-controller.enabled", havingValue = "true", matchIfMissing = true)
     public STFileController stFileController() {
         return new STFileController();
     }

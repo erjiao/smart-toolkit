@@ -2,8 +2,10 @@ package com.bmsoft.toolkit.xxljob.service.impl;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
+import com.bmsoft.toolkit.xxljob.config.XxlJobProperties;
 import com.bmsoft.toolkit.xxljob.service.JobLoginService;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
 import java.net.HttpCookie;
@@ -18,15 +20,21 @@ import java.util.Optional;
  * @version: 1.0
  */
 @Service
+@DependsOn("xxlJobExecutor")
 public class JobLoginServiceImpl implements JobLoginService {
 
-    @Value("${smart-toolkit.xxl.job.admin.addresses}")
+    @Autowired
+    public JobLoginServiceImpl(XxlJobProperties xxlJobProperties) {
+        XxlJobProperties.Admin admin = xxlJobProperties.getAdmin();
+        this.adminAddresses = admin.getAddresses();
+        this.username = admin.getUsername();
+        this.password = admin.getPassword();
+    }
+
     private String adminAddresses;
 
-    @Value("${smart-toolkit.xxl.job.admin.username}")
     private String username;
 
-    @Value("${smart-toolkit.xxl.job.admin.password}")
     private String password;
 
     private final Map<String, String> loginCookie = new HashMap<>();

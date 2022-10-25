@@ -5,11 +5,12 @@ import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.bmsoft.toolkit.xxljob.config.XxlJobProperties;
 import com.bmsoft.toolkit.xxljob.model.XxlJobGroup;
 import com.bmsoft.toolkit.xxljob.service.JobGroupService;
 import com.bmsoft.toolkit.xxljob.service.JobLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,18 +23,24 @@ import java.util.stream.Collectors;
  * @version: 1.0
  */
 @Service
+@DependsOn("xxlJobExecutor")
 public class JobGroupServiceImpl implements JobGroupService {
 
-    @Value("${smart-toolkit.xxl.job.admin.addresses}")
+    @Autowired
+    public JobGroupServiceImpl(JobLoginService jobLoginService, XxlJobProperties xxlJobProperties) {
+        this.jobLoginService = jobLoginService;
+
+        this.adminAddresses = xxlJobProperties.getAdmin().getAddresses();
+        this.appName = xxlJobProperties.getExecutor().getAppname();
+        this.title = xxlJobProperties.getExecutor().getTitle();
+    }
+
     private String adminAddresses;
 
-    @Value("${smart-toolkit.xxl.job.executor.appname}")
     private String appName;
 
-    @Value("${smart-toolkit.xxl.job.executor.title}")
     private String title;
 
-    @Autowired
     private JobLoginService jobLoginService;
 
     @Override

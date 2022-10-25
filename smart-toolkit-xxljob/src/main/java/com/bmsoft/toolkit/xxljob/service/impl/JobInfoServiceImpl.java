@@ -8,11 +8,12 @@ import cn.hutool.json.JSON;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.bmsoft.toolkit.xxljob.config.XxlJobProperties;
 import com.bmsoft.toolkit.xxljob.model.XxlJobInfo;
 import com.bmsoft.toolkit.xxljob.service.JobInfoService;
 import com.bmsoft.toolkit.xxljob.service.JobLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,12 +26,17 @@ import java.util.stream.Collectors;
  * @version: 1.0
  */
 @Service
+@DependsOn("xxlJobExecutor")
 public class JobInfoServiceImpl implements JobInfoService {
 
-    @Value("${smart-toolkit.xxl.job.admin.addresses}")
+    @Autowired
+    public JobInfoServiceImpl(JobLoginService jobLoginService, XxlJobProperties xxlJobProperties) {
+        this.jobLoginService = jobLoginService;
+        this.adminAddresses = xxlJobProperties.getAdmin().getAddresses();
+    }
+
     private String adminAddresses;
 
-    @Autowired
     private JobLoginService jobLoginService;
 
     @Override

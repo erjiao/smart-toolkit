@@ -1,5 +1,6 @@
 package com.bmsoft.toolkit.core.holder;
 
+import com.bmsoft.toolkit.core.annotation.UseBySpringBean;
 import lombok.NonNull;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.ApplicationContext;
@@ -9,6 +10,7 @@ import org.springframework.context.ApplicationContextAware;
  * @author llk
  * @date 2019-10-09 14:53
  */
+@UseBySpringBean
 public class SpringContextHolder implements ApplicationContextAware, DisposableBean {
 
     private static ApplicationContext applicationContext = null;
@@ -67,6 +69,7 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
      * 获取环境变量
      */
     public static String getEnv(String key) {
+        assertContextInjected();
         return applicationContext.getEnvironment().getProperty(key);
     }
 
