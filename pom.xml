@@ -7,16 +7,16 @@
     <groupId>com.bmsoft</groupId>
     <artifactId>smart-toolkit</artifactId>
     <packaging>pom</packaging>
-    <version>1.3.1.RELEASE</version>
+    <version>1.3.2.RELEASE</version>
     <modules>
         <module>smart-toolkit-core</module>
         <module>smart-toolkit-web</module>
-        <module>smart-toolkit-job</module>
         <module>smart-toolkit-bom</module>
         <module>smart-toolkit-swagger</module>
         <module>smart-toolkit-mybatis</module>
         <module>smart-toolkit-minio</module>
         <module>smart-toolkit-xxljob</module>
+        <module>smart-toolkit-excel</module>
         <module>smart-toolkit-all</module>
     </modules>
 
@@ -47,6 +47,9 @@
         <swagger-annonations.version>1.5.22</swagger-annonations.version>
         <minio.version>8.2.1</minio.version>
         <xxl-job.version>2.3.0</xxl-job.version>
+        <easyexcel.version>3.1.1</easyexcel.version>
+        <guava.version>31.1-jre</guava.version>
+        <gson.version>2.9.0</gson.version>
     </properties>
 
     <dependencies>
@@ -54,6 +57,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 
@@ -62,7 +66,7 @@
             <dependency>
                 <groupId>com.bmsoft</groupId>
                 <artifactId>smart-toolkit-bom</artifactId>
-                <version>1.3.1.RELEASE</version>
+                <version>1.3.2.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -196,6 +200,24 @@
                 <groupId>com.xuxueli</groupId>
                 <artifactId>xxl-job-core</artifactId>
                 <version>${xxl-job.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${easyexcel.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${gson.version}</version>
             </dependency>
 
         </dependencies>

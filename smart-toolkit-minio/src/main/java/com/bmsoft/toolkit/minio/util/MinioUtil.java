@@ -20,6 +20,7 @@ import io.minio.messages.Bucket;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Headers;
+import org.springframework.boot.web.server.MimeMappings;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -75,7 +76,8 @@ public class MinioUtil {
     }
 
     private String getMimeType(String filename) {
-        String contentType = FileUtil.getMimeType(filename);
+        String extension = FileUtil.extName(filename);
+        String contentType = MimeMappings.DEFAULT.get(extension.toLowerCase());
 
         // 默认文本
         if (null == contentType) {
@@ -156,7 +158,7 @@ public class MinioUtil {
                 .userMetadata(userMetadata)
                 .build();
         minioClient.putObject(objectArgs);
-        return minioProperties.getUrl(bucketName, objectName);
+        return minioProperties.genUrl(bucketName, objectName);
     }
 
 

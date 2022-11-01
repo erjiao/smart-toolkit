@@ -18,12 +18,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author llk
  * @date 2019-10-09 13:37
- *
+ * <p>
  * 当指定 {@code @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)} 时,
  * Feign 调用时 springboot 会自动抛出运行时异常, 会使得调用方无法获取 Result
  */
@@ -36,7 +39,7 @@ public class GlobalExceptionHandler {
     /**
      * spring.mvc.throw-exception-if-no-handler-found=true
      * spring.resources.add-mappings=false
-     *
+     * <p>
      * 在 application.properties 配置上面信息才会起作用
      */
 //    @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -45,7 +48,6 @@ public class GlobalExceptionHandler {
 //        log.error("找不到对应请求", e);
 //        return Result.error(Code.NOT_FOUND, request.getRequestURI());
 //    }
-
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public Result handleHttpMessageNotReadableException(HttpMessageNotReadableException e,
@@ -80,6 +82,28 @@ public class GlobalExceptionHandler {
         }
         log.error("参数校验失败: {}", builder.toString());
         return Result.error(Code.BAD_REQUEST, builder.toString(), request.getRequestURI());
+    }
+
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Result handleConstraintViolationException(ConstraintViolationException e,
+                                                     HttpServletRequest request) {
+        Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
+        StringBuilder sb = new StringBuilder(128);
+        for (ConstraintViolation<?> item : violations) {
+            sb.append(item.getPropertyPath().toString())
+                    .append(" input invalid value: ")
+                    .append(item.getInvalidValue())
+                    .append(". error: ")
+                    .append(item.getMessage())
+                    .append(";");
+        }
+        if (sb.length() <= 0) {
+            sb.append(Code.BAD_REQUEST.getMsg());
+        }
+        log.error("参数校验失败: {}", sb.toString());
+        return Result.error(Code.BAD_REQUEST, sb.toString(), request.getRequestURI());
     }
 
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
@@ -122,7 +146,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UnsupportedOperationException.class)
     public Result handleUnsupportedOperationException(Exception e, HttpServletRequest request) {
         log.error("不支持的数据类型", e);
-        return Result.error(500,e.getMessage(), request.getRequestURI());
+        return Result.error(500, e.getMessage(), request.getRequestURI());
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

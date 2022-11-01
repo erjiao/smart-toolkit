@@ -1,4 +1,4 @@
-package com.bmsoft.toolkit.job;
+package com.bmsoft.toolkit.core.job;
 
 /**
  * @author llk

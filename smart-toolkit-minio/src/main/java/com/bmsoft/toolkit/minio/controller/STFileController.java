@@ -1,9 +1,12 @@
 package com.bmsoft.toolkit.minio.controller;
 
 import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.util.StrUtil;
 import com.bmsoft.toolkit.core.Result;
+import com.bmsoft.toolkit.core.exception.BusinessException;
 import com.bmsoft.toolkit.minio.DownloadResponse;
 import com.bmsoft.toolkit.minio.UploadResponse;
+import com.bmsoft.toolkit.minio.config.MinioProperties;
 import com.bmsoft.toolkit.minio.util.MinioUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -39,6 +42,9 @@ public class STFileController {
     @Autowired
     MinioUtil minioUtil;
 
+    @Autowired
+    MinioProperties minioProperties;
+
     @ApiOperation("文件上传")
     @PostMapping("/upload")
     public Result<UploadResponse> upload(@RequestPart("file") MultipartFile file) throws IOException {
@@ -58,9 +64,19 @@ public class STFileController {
     }
 
 
-    @ApiOperation("文件下载")
+    @ApiOperation("文件下载, 可根据fullName或url下载")
     @GetMapping("/download")
-    public ResponseEntity<byte[]> download(@RequestParam("fullName") String fullName) throws IOException {
+    public ResponseEntity<byte[]> download(@RequestParam(value = "fullName", required = false) String fullName,
+                                           @RequestParam(value = "url", required = false) String url) throws IOException {
+
+        if (StrUtil.isBlank(fullName)) {
+            if (StrUtil.isNotBlank(url)) {
+                fullName = minioProperties.wipeUrl(url);
+            } else {
+                throw new BusinessException("fullName, url 至少传一个");
+            }
+        }
+
         DownloadResponse downloadResponse = minioUtil.download(fullName);
         try (InputStream inputStream = downloadResponse.getInputStream()) {
             byte[] bytes = IoUtil.readBytes(inputStream);

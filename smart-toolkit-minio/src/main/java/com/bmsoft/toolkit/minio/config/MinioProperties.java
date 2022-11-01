@@ -45,8 +45,12 @@ public class MinioProperties {
     private Boolean enabled = true;
 
 
-    public String getUrl(String bucketName, String objectName) {
+    public String genUrl(String bucketName, String objectName) {
         return endpoint + "/" + bucketName + "/" + objectName;
+    }
+
+    public String wipeUrl(String url) {
+        return url.replace(endpoint + "/" + bucketName + "/", "");
     }
 
 }
