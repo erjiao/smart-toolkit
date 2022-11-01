@@ -45,6 +45,7 @@ public class STFileController {
     @Autowired
     MinioProperties minioProperties;
 
+    // TODO: 11/1/22 llk 限制文件上传类型
     @ApiOperation("文件上传")
     @PostMapping("/upload")
     public Result<UploadResponse> upload(@RequestPart("file") MultipartFile file) throws IOException {
