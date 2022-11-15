@@ -124,7 +124,7 @@ public class MinioUtil {
     @SneakyThrows
     public String putObject(String bucketName, String objectName, InputStream stream) {
         long size = stream.available();
-        String contextType = FileUtil.getMimeType(objectName);
+        String contextType = this.getMimeType(objectName);
         return this.putObject(bucketName, objectName, stream, size, contextType);
     }
 

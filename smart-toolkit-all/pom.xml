@@ -5,7 +5,7 @@
     <parent>
         <artifactId>smart-toolkit</artifactId>
         <groupId>com.bmsoft</groupId>
-        <version>1.3.2.RELEASE</version>
+        <version>1.3.3.RELEASE</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -46,6 +46,11 @@
         <dependency>
             <groupId>com.bmsoft</groupId>
             <artifactId>smart-toolkit-excel</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.bmsoft</groupId>
+            <artifactId>smart-toolkit-xss</artifactId>
         </dependency>
 
     </dependencies>

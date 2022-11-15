@@ -5,6 +5,7 @@ import lombok.NonNull;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ApplicationEvent;
 
 /**
  * @author llk
@@ -20,7 +21,6 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
      */
     @Override
     public void setApplicationContext(@NonNull ApplicationContext applicationContext) {
-
         SpringContextHolder.applicationContext = applicationContext;
     }
 
@@ -81,5 +81,16 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
             throw new IllegalStateException("applicaitonContext未注入,请在applicationContext.xml中定义SpringContextHolder");
         }
     }
+
+
+    /**
+     * 发布事件
+     * @param event
+     */
+    public static void publishEvent(ApplicationEvent event) {
+        assertContextInjected();
+        applicationContext.publishEvent(event);
+    }
+
 
 }

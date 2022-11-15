@@ -144,15 +144,15 @@ public class GlobalExceptionHandler {
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(UnsupportedOperationException.class)
-    public Result handleUnsupportedOperationException(Exception e, HttpServletRequest request) {
+    public Result handleUnsupportedOperationException(UnsupportedOperationException e, HttpServletRequest request) {
         log.error("不支持的数据类型", e);
-        return Result.error(500, e.getMessage(), request.getRequestURI());
+        return Result.error(Code.ERROR, e.getMessage(), request.getRequestURI());
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public Result handleException(Exception e, HttpServletRequest request) {
-        log.error("服务繁忙", e);
-        return Result.error(Code.ERROR, request.getRequestURI());
+        log.error("系统繁忙", e);
+        return Result.error(Code.ERROR, e.getMessage(), request.getRequestURI());
     }
 }
