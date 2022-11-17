@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,31 +65,36 @@ public class STFileController {
         return Result.success(list);
     }
 
+    @ApiOperation("文件预览, 可根据fullName或url预览(仅支持图片,txt,pdf)")
+    @GetMapping("/preview")
+    public ResponseEntity<byte[]> preview(@RequestParam(value = "fullName", required = false) String fullName,
+                                          @RequestParam(value = "url", required = false) String url) throws IOException {
+        fullName = getFullName(fullName, url);
+        DownloadResponse downloadResponse = minioUtil.download(fullName);
+        try (InputStream inputStream = downloadResponse.getInputStream()) {
+            byte[] bytes = IoUtil.readBytes(inputStream);
+            HttpHeaders headers = buildHttpHeaders(downloadResponse, "inline");
+
+            return ResponseEntity
+                    .ok()
+                    .headers(headers)
+                    .contentType(MediaType.parseMediaType(downloadResponse.getContentType()))
+                    .body(bytes);
+        }
+    }
+
+
 
     @ApiOperation("文件下载, 可根据fullName或url下载")
     @GetMapping("/download")
     public ResponseEntity<byte[]> download(@RequestParam(value = "fullName", required = false) String fullName,
                                            @RequestParam(value = "url", required = false) String url) throws IOException {
 
-        if (StrUtil.isBlank(fullName)) {
-            if (StrUtil.isNotBlank(url)) {
-                fullName = minioProperties.wipeUrl(url);
-            } else {
-                throw new BusinessException("fullName, url 至少传一个");
-            }
-        }
-
+        fullName = getFullName(fullName, url);
         DownloadResponse downloadResponse = minioUtil.download(fullName);
         try (InputStream inputStream = downloadResponse.getInputStream()) {
             byte[] bytes = IoUtil.readBytes(inputStream);
-            String filename = URLEncoder.encode(downloadResponse.getOriginalFilename(), "UTF-8");
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Accept-Ranges", "bytes");
-            headers.add("Content-Length", bytes.length + "");
-            headers.add("Content-Disposition", String.format("attachment; filename=%s", filename));
-            headers.add("Pragma", "no-cache");
-            headers.add("Expires", "0");
+            HttpHeaders headers = buildHttpHeaders(downloadResponse, "attachment");
 
             return ResponseEntity
                     .ok()
@@ -96,6 +102,30 @@ public class STFileController {
                     .contentType(MediaType.APPLICATION_OCTET_STREAM)
                     .body(bytes);
         }
+    }
+
+    private HttpHeaders buildHttpHeaders(DownloadResponse downloadResponse, String dispositionType) throws UnsupportedEncodingException {
+        String filename = URLEncoder.encode(downloadResponse.getOriginalFilename(), "UTF-8");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Accept-Ranges", "bytes");
+        headers.add("Content-Length", downloadResponse.getContentLength() + "");
+        headers.add("Content-Disposition", String.format("%s; filename=%s", dispositionType, filename));
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+        return headers;
+    }
+
+    private String getFullName(String fullName, String url) {
+        log.info("fullName: {}, url: {}", fullName, url);
+        if (StrUtil.isBlank(fullName)) {
+            if (StrUtil.isNotBlank(url)) {
+                fullName = minioProperties.wipeUrl(url);
+            } else {
+                throw new BusinessException("fullName, url 至少传一个");
+            }
+        }
+        return fullName;
     }
 
 }
