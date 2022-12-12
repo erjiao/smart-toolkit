@@ -21,4 +21,7 @@ public interface SysStDictMapper extends BaseMapper<SysStDict> {
     List<SysStDict> selectAll();
 
 
+    @Select("select t.*, t1.dict_name from sys_st_dict t inner join sys_st_dict_type t1 on t.dict_type = t1.dict_type where t.status = '0' and t1.status = '0' and t.parent_id != -1")
+    List<SysStDict> selectHasParentNormalDictList();
+
 }

@@ -42,7 +42,7 @@ public class BaseEntityMetaObjectHandler implements MetaObjectHandler {
      * @param metaObject MetaObject
      * @param isCover 是否覆盖原有值,避免更新操作手动入参
      */
-    private static void fillValIfNullByName(String fieldName, Object fieldVal, MetaObject metaObject, boolean isCover) {
+    protected static void fillValIfNullByName(String fieldName, Object fieldVal, MetaObject metaObject, boolean isCover) {
         // 1. 没有 get 方法
         if (!metaObject.hasSetter(fieldName)) {
             return;

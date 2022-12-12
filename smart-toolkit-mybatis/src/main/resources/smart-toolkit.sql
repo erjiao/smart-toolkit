@@ -7,6 +7,7 @@ create table `sys_st_dict` (
   `dict_value` varchar(100) default '' comment '字典编码中文',
   `dict_type` varchar(100) default '' comment '字典类型',
   `dict_sort` int(4) default '0' comment '字典排序',
+  `parent_id` bigint(20)  default -1 comment '父id',
   `status` char(1) default '0' comment '状态（0正常 1停用）',
   `create_time` datetime default current_timestamp comment '创建时间',
   `update_time` datetime default current_timestamp on update current_timestamp comment '更新时间',

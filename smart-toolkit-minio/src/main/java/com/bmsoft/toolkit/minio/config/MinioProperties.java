@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "smart-toolkit.minio")
 public class MinioProperties {
 
-    private static final String LOCAL_BASE_URI = "/api/st/file/download?fullName=";
+    private static final String LOCAL_BASE_URI = "/api/st/file/download";
 
     /**
      * endPoint是一个URL，域名，IPv4或者IPv6地址
@@ -70,7 +70,7 @@ public class MinioProperties {
     public String genUrl(String bucketName, String objectName) {
         if (useProxy) {
             if (proxyType == ProxyType.LOCAL) {
-                return LOCAL_BASE_URI + objectName;
+                return LOCAL_BASE_URI + "?fullName=" + objectName;
             }
             if (proxyType == ProxyType.CUSTOM) {
                 return this.proxyEndpoint + "?fullName=" + objectName;
@@ -82,7 +82,7 @@ public class MinioProperties {
     public String wipeUrl(String url) {
         if (useProxy) {
             if (proxyType == ProxyType.LOCAL) {
-                return url.replace(LOCAL_BASE_URI, "");
+                return url.replace(LOCAL_BASE_URI + "?fullName=", "");
             }
             if (proxyType == ProxyType.CUSTOM) {
                 return url.replace(this.proxyEndpoint + "?fullName=", "");

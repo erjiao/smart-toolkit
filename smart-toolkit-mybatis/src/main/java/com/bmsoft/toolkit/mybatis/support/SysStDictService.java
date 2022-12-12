@@ -30,15 +30,20 @@ public class SysStDictService extends ServiceImpl<SysStDictMapper, SysStDict> {
 
     /**
      * 关联sys_st_dict_type 获取 status = 0 的字典项
+     *
      * @return
      */
     public List<SysStDict> getNormalDictList() {
-        return sysStDictMapper.selectNormalDictList();
+        List<SysStDict> dictList = sysStDictMapper.selectNormalDictList();
+        fillEachChildren(dictList);
+        return dictList;
     }
+
 
 
     /**
      * 根据字典类型获取字典列表
+     *
      * @param dictType
      * @return
      */
@@ -50,7 +55,9 @@ public class SysStDictService extends ServiceImpl<SysStDictMapper, SysStDict> {
         LambdaQueryWrapper<SysStDict> queryWrapper = Wrappers.<SysStDict>lambdaQuery()
                 .eq(SysStDict::getDictType, dictType)
                 .eq(SysStDict::getStatus, "0");
-        return sysStDictMapper.selectList(queryWrapper);
+        List<SysStDict> dictList = sysStDictMapper.selectList(queryWrapper);
+        fillEachChildren(dictList);
+        return dictList;
     }
 
     /**
@@ -59,7 +66,14 @@ public class SysStDictService extends ServiceImpl<SysStDictMapper, SysStDict> {
      * @return
      */
     public List<SysStDict> getDictList() {
-        return sysStDictMapper.selectAll();
+        List<SysStDict> dictList = sysStDictMapper.selectAll();
+        fillEachChildren(dictList);
+        return dictList;
+    }
+
+
+    public List<SysStDict> getHasParentNormalDictList() {
+        return sysStDictMapper.selectHasParentNormalDictList();
     }
 
     /**
@@ -91,12 +105,40 @@ public class SysStDictService extends ServiceImpl<SysStDictMapper, SysStDict> {
         DictHolder.getInstance().init(d);
     }
 
-    private Dict transferTo(SysStDict sysStDict) {
+    private Dict transferTo(SysStDict current) {
         Dict dict = new Dict();
-        dict.setCode(sysStDict.getDictCode());
-        dict.setValue(sysStDict.getDictValue());
-        dict.setType(sysStDict.getDictType());
-        dict.setSort(sysStDict.getDictSort());
+        dict.setCode(current.getDictCode());
+        dict.setValue(current.getDictValue());
+        dict.setType(current.getDictType());
+        dict.setSort(current.getDictSort());
+
+        // children 赋值
+        List<SysStDict> children = current.getChildren();
+        for (SysStDict child : children) {
+            dict.getChildren().add(transferTo(child));
+        }
         return dict;
     }
+
+    private void fillEachChildren(List<SysStDict> dicts) {
+        List<SysStDict> allChildren = this.getHasParentNormalDictList();
+        for (SysStDict current : dicts) {
+            fillChildren(current, allChildren);
+        }
+    }
+
+    private SysStDict fillChildren(SysStDict current, List<SysStDict> remains) {
+        for (SysStDict remain : remains) {
+            if (hasChildren(current, remains) && current.getId().equals(remain.getParentId())) {
+                current.getChildren().add(fillChildren(remain, remains));
+            }
+        }
+        return current;
+    }
+
+    private boolean hasChildren(SysStDict current, List<SysStDict> remains) {
+        return remains.size() > 0 &&
+                remains.stream().anyMatch(c -> c.getParentId().equals(current.getId()));
+    }
+
 }

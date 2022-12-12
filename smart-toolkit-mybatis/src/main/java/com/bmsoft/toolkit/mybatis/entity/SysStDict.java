@@ -9,7 +9,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author llk
@@ -46,6 +48,10 @@ public class SysStDict implements Serializable {
     @TableField("status")
     private String status;
 
+    @ApiModelProperty(value = "父id, 默认值 -1")
+    @TableField("parent_id")
+    private Long parentId = -1L;
+
     @TableField(value = "create_time")
     @ApiModelProperty("创建时间")
     private Date createTime;
@@ -61,6 +67,10 @@ public class SysStDict implements Serializable {
     @ApiModelProperty(value = "字典名称")
     @TableField(exist = false)
     private String dictName;
+
+    @ApiModelProperty(value = "子字典列表")
+    @TableField(exist = false)
+    private List<SysStDict> children = new ArrayList<>();
 
 
 }
